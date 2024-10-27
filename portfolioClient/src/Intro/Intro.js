@@ -19,7 +19,7 @@ export default function Intro({ specificUserInfo }) {
                         <img src={linkednLogo} className="socialLogo" />
                     </Link>
 
-                    <Link className="gitHubLink">
+                    <Link className="gitHubLink" to={`${specificUserInfo.git_hub_link}`}>
                         <img src={gitHubLogo} className="socialLogo" />
                     </Link>
 
