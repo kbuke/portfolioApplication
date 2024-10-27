@@ -4,6 +4,8 @@ import TechStack from "../TechStack/TechStack"
 
 import Projects from "../Projects/Projects"
 
+import Email from "../Emails/Email"
+
 export default function Home({
     userInfo,
 
@@ -11,7 +13,10 @@ export default function Home({
     setTechStack,
 
     projects,
-    setProjects
+    setProjects,
+
+    allEmails,
+    setAllEmails
 }){
 
     const specificUserInfo = userInfo[0]? userInfo[0] : []
@@ -32,6 +37,11 @@ export default function Home({
             <Projects 
                 projects={projects}
                 setProjects={setProjects}
+            />
+
+            <Email 
+                allEmails={allEmails}
+                setAllEmails={setAllEmails}
             />
         </div>
     )

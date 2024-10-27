@@ -15,6 +15,9 @@ function App() {
   //Set state for projects
   const [projects, setProjects] = useState([])
 
+  //Set state for emails
+  const [allEmails, setAllEmails] = useState([])
+
   //Fetch user info
   useEffect(() => {
     fetch("/profile")
@@ -51,6 +54,17 @@ function App() {
     .then(project => setProjects(project))
   }, [])
 
+  useEffect(() => {
+    fetch("/emails")
+    .then(r => {
+      if(r.ok){
+        return r.json()
+      }
+      throw r 
+    })
+    .then(email => setAllEmails(email))
+  }, [])
+
   return(
     <div
       style={{
@@ -65,6 +79,9 @@ function App() {
 
         projects={projects}
         setProjects={setProjects}
+
+        allEmails={allEmails}
+        setAllEmails={setAllEmails}
       />
     </div>
   )

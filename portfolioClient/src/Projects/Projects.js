@@ -11,7 +11,6 @@ export default function Projects({
 }){
 
     const [sortProjects, setSortProjects] = useState([])
-    const [hoveredProjects, setHoveredProjects] = useState("")
 
     //Use dependancy array to alter projects when changes made
     useEffect(() => {
@@ -28,8 +27,10 @@ export default function Projects({
         const instituteLogo = projectInstitution.logo
         const instituteName = projectInstitution.name 
 
+        const gitLink = project.git_hub_link ? project.git_hub_link : null 
+        const blogLink = project.blog_link ? project.blog_link : null 
+
         const projectPoints = project.points
-        console.log(projectPoints)
         const renderPoints = projectPoints.map((points, index) => (
             <li
                 key={index}
@@ -57,6 +58,33 @@ export default function Projects({
                         />
 
                         <ul>{renderPoints}</ul>
+
+                        <div
+                            style={{display: "grid", gridTemplateColumns: "repeat(2, 1fr)", marginRight: "20px", marginLeft: "20px"}}
+                        >
+                            <Link
+                                to={gitLink}
+                                className="linkContainer"
+                            >
+                                <img 
+                                    alt={"Git Hub link"}
+                                    src={gitLogo}
+                                    className="linkImg"
+                                />
+                            </Link>
+
+                            <Link
+                                to={blogLink}
+                                className="linkContainer"
+                                style={{alignSelf: "end"}}
+                            >
+                                <img 
+                                    alt={"BlogLink"}
+                                    src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiix8XOZ_wZxRWWcSuaKdxR9Ya7Q7EiBm33Q&s"}
+                                    className="linkImg"
+                                />
+                            </Link>
+                        </div>
                     </div>
                 </div>
                 <h3 

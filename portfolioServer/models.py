@@ -57,6 +57,11 @@ class Institute(db.Model, SerializerMixin):
     #Add relations
     projects = db.relationship("Projects", backref = "institutes")
 
+    #Add seriealize rules
+    serialize_rules = (
+        "-projects",
+    )
+
 
 class Languages(db.Model, SerializerMixin):
     __tablename__ = "Languages"
@@ -65,6 +70,7 @@ class Languages(db.Model, SerializerMixin):
     logo = db.Column(db.String, nullable=True)
     name = db.Column(db.String, nullable=False)
     experience = db.Column(db.String, nullable=False)
+
 
 class Projects(db.Model, SerializerMixin):
     __tablename__ = "Projects"
@@ -84,6 +90,7 @@ class Projects(db.Model, SerializerMixin):
     #Add serialize rules
     serialize_rules = (
         "-institutes.projects",
+        "-languages.projects",
     )
 
 class ProjectPoints(db.Model, SerializerMixin):
@@ -99,3 +106,13 @@ class ProjectPoints(db.Model, SerializerMixin):
     serialize_rules = (
         "-projects",
     )
+
+class Emails(db.Model, SerializerMixin):
+    __tablename__ = "emails"
+
+    id = db.Column(db.Integer, primary_key=True)
+    recipient = db.Column(db.String, nullable=False)
+    sender_name = db.Column(db.String, nullable=False)
+    sender_company = db.Column(db.String, nullable=False)
+    subject = db.Column(db.String, nullable=False)
+    message = db.Column(db.String, nullable=False)
