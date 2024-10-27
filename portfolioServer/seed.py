@@ -1,4 +1,4 @@
-from models import Profile, Institute, Languages
+from models import Profile, Institute, Languages, Projects
 
 from app import app 
 from config import db 
@@ -67,4 +67,19 @@ if __name__ == "__main__":
         )
         db.session.add_all([HTML, JavaScript, CSS, React])
         db.session.commit()
+
+        print("Seeding projects")
+        nihon_go = Projects(
+            image="https://www.picdrop.com/kaanbuke/kMs3e1zNcQ?file=44fba2c0c54f7764ba62600726bcee35",
+            name="Nihon-Go",
+            git_hub_link = "https://github.com/kbuke/nihongo",
+            blog_link = "https://medium.com/@kaanbuke/nihon-go-00826ac9a073",
+            start_date = date(2024, 8, 1),
+            end_date = date(2024, 9, 3),
+
+            institute_id = 1
+        )
+        db.session.add_all([nihon_go])
+        db.session.commit()
+
 

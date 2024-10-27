@@ -54,6 +54,9 @@ class Institute(db.Model, SerializerMixin):
     logo = db.Column(db.String, nullable=False)
     location = db.Column(db.String, nullable=False)
 
+    #Add relations
+    projects = db.relationship("Projects", backref = "institutes")
+
 
 class Languages(db.Model, SerializerMixin):
     __tablename__ = "Languages"
@@ -62,3 +65,22 @@ class Languages(db.Model, SerializerMixin):
     logo = db.Column(db.String, nullable=True)
     name = db.Column(db.String, nullable=False)
     experience = db.Column(db.String, nullable=False)
+
+class Projects(db.Model, SerializerMixin):
+    __tablename__ = "Projects"
+
+    id = db.Column(db.Integer, primary_key=True)
+    image = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False)
+    git_hub_link = db.Column(db.String, nullable=True)
+    blog_link = db.Column(db.String, nullable=True)
+    start_date = db.Column(db.Date, nullable=False)
+    end_date = db.Column(db.Date, nullable=False)
+
+    #Set up relations
+    institute_id = db.Column(db.Integer, db.ForeignKey("Institutes.id"))
+
+    #Add serialize rules
+    serialize_rules = (
+        "-institutes.projects",
+    )

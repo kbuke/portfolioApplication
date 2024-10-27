@@ -12,6 +12,9 @@ function App() {
   //Set state for technologies
   const [techStack, setTechStack] = useState([])
 
+  //Set state for projects
+  const [projects, setProjects] = useState([])
+
   //Set state to see which project user hovers over
   const [hoveredProject, setHoveredProject] = useState("")
 
@@ -38,6 +41,20 @@ function App() {
     })
     .then(technologies => setTechStack(technologies))
   }, [])
+
+  //Fetch projects
+  useEffect(() => {
+    fetch("/projects")
+    .then(r => {
+      if(r.ok){
+        return r.json()
+      }
+      throw r 
+    })
+    .then(project => setProjects(project))
+  }, [])
+
+  console.log(projects)
 
   return(
     <div
