@@ -23,7 +23,7 @@ export default function Intro({ specificUserInfo }) {
                         <img src={gitHubLogo} className="socialLogo" />
                     </Link>
 
-                    <Link className="instaLink">
+                    <Link className="instaLink" to={`${specificUserInfo.insta_link}`}>
                         <img className="socialLogo" src={instaLogo} />
                     </Link>
                 </div>
