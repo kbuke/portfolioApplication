@@ -2,11 +2,16 @@ import Intro from "../Intro/Intro"
 
 import TechStack from "../TechStack/TechStack"
 
+import Projects from "../Projects/Projects"
+
 export default function Home({
     userInfo,
 
     techStack,
-    setTechStack
+    setTechStack,
+
+    projects,
+    setProjects
 }){
 
     const specificUserInfo = userInfo[0]? userInfo[0] : []
@@ -22,6 +27,11 @@ export default function Home({
             <TechStack 
                 techStack={techStack}
                 setTechStack={setTechStack}
+            />
+
+            <Projects 
+                projects={projects}
+                setProjects={setProjects}
             />
         </div>
     )

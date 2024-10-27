@@ -54,8 +54,6 @@ function App() {
     .then(project => setProjects(project))
   }, [])
 
-  console.log(projects)
-
   return(
     <div
       style={{
@@ -67,6 +65,9 @@ function App() {
 
         techStack={techStack}
         setTechStack={setTechStack}
+
+        projects={projects}
+        setProjects={setProjects}
       />
     </div>
   )
