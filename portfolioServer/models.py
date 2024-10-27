@@ -79,8 +79,23 @@ class Projects(db.Model, SerializerMixin):
 
     #Set up relations
     institute_id = db.Column(db.Integer, db.ForeignKey("Institutes.id"))
+    points = db.relationship("ProjectPoints", backref="projects")
 
     #Add serialize rules
     serialize_rules = (
         "-institutes.projects",
+    )
+
+class ProjectPoints(db.Model, SerializerMixin):
+    __tablename__ = "projectPoints"
+
+    id = db.Column(db.Integer, primary_key=True)
+    point = db.Column(db.String, nullable=False)
+
+    #Set up relations
+    project_id = db.Column(db.Integer, db.ForeignKey("Projects.id"))
+
+    #Add serialize rules
+    serialize_rules = (
+        "-projects",
     )

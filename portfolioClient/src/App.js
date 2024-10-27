@@ -15,9 +15,6 @@ function App() {
   //Set state for projects
   const [projects, setProjects] = useState([])
 
-  //Set state to see which project user hovers over
-  const [hoveredProject, setHoveredProject] = useState("")
-
   //Fetch user info
   useEffect(() => {
     fetch("/profile")

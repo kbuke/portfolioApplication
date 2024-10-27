@@ -11,7 +11,7 @@ export default function TechStack({
         <div
             key={index}
             className="techContainer"
-            style={{color: "white"}}
+            style={{color: "white", marginBottom: "20px"}}
         >
             <div
                 className="techGrid"
@@ -75,11 +75,12 @@ export default function TechStack({
             id="techStackGrid"
             style={{
                 display: "grid",
+                color: "white",
                 gridTemplateColumns: "repeat(3, auto)",
                 marginLeft: "20px",
                 marginRight: "20px",
                 marginBottom: "20px",
-                borderBottom: "solid"
+                borderBottom: "solid",
             }}
         >
             {renderStack}

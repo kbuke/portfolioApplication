@@ -1,4 +1,4 @@
-from models import Profile, Institute, Languages, Projects
+from models import Profile, Institute, Languages, Projects, ProjectPoints
 
 from app import app 
 from config import db 
@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
         print("Seeding projects")
         nihon_go = Projects(
-            image="https://www.picdrop.com/kaanbuke/kMs3e1zNcQ?file=44fba2c0c54f7764ba62600726bcee35",
+            image="https://i.ibb.co/KqC0Z00/nihongo.png",
             name="Nihon-Go",
             git_hub_link = "https://github.com/kbuke/nihongo",
             blog_link = "https://medium.com/@kaanbuke/nihon-go-00826ac9a073",
@@ -79,7 +79,35 @@ if __name__ == "__main__":
 
             institute_id = 1
         )
-        db.session.add_all([nihon_go])
+        pokeDex = Projects(
+            image="https://i.ibb.co/3Yf0Jfr/Screenshot-2024-10-27-at-12-47-58.png",
+            name="PokeDex",
+            git_hub_link="https://github.com/kbuke/Gotta-Catch-Em-All",
+            blog_link="https://medium.com/@kaanbuke/gotta-catch-em-all-8bd067bf5968",
+            start_date = date(2023, 10, 15),
+            end_date = date(2023, 11, 1),
+
+            institute_id = 1
+        )
+        db.session.add_all([nihon_go, pokeDex])
         db.session.commit()
+
+        print("Seeding project points....")
+        nihongoP1 = ProjectPoints(
+            point = "A social media RESTful API application based on travel in Japan.",
+            project_id = 1
+        )
+        nihongoP2 = ProjectPoints(
+            point = "Users can sign up, and create custome itineraries, review, and upload pictures.",
+            project_id = 1
+        )
+        pokedex1 = ProjectPoints(
+            point = "An application that renders all 151 original Pokemon.",
+            project_id = 2
+        )
+        db.session.add_all([nihongoP1, nihongoP2, pokedex1])
+        db.session.commit()
+
+        
 
 
