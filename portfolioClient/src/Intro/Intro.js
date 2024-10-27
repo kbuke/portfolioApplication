@@ -12,7 +12,7 @@ import Picture from "./Components/Picture";
 export default function Intro({ specificUserInfo }) {
     console.log(specificUserInfo);
     return (
-        <div style={{ display: "flex", color: "white", flexDirection: "column" }}>
+        <div style={{ display: "flex", color: "white", flexDirection: "column", borderBottom: "solid"}}>
             <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
                 <div id="socialsGrid">
                     <Link className="linkednLink" to={`${specificUserInfo.linkdn_link}`}>

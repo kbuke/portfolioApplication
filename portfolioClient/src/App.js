@@ -47,6 +47,9 @@ function App() {
     >
       <Home 
         userInfo={userInfo}
+
+        techStack={techStack}
+        setTechStack={setTechStack}
       />
     </div>
   )

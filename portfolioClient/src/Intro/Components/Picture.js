@@ -8,7 +8,8 @@ export default function Picture(){
                 alt="Kaan Buke image"
                 style={{
                     maxWidth: "100%",
-                    zIndex: "-0.5"
+                    zIndex: "-0.5",
+                    marginBottom: "20px"
                 }}
             />
         </div>

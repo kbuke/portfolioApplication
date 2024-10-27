@@ -55,6 +55,16 @@ if __name__ == "__main__":
             name = "JavaScript",
             experience = "1 year"
         )
-        db.session.add_all([HTML, JavaScript])
+        CSS = Languages(
+            logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyfXdKH7SrCVpLx-h0j9VSLf7LQxwWgptJNw&s",
+            name = "CSS",
+            experience = "1 year"
+        )
+        React = Languages(
+            logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcR5U16C8yXgBpl7-Bc7Itjx3_LRl425zINA&s",
+            name = "React.js",
+            experience = "1 year"
+        )
+        db.session.add_all([HTML, JavaScript, CSS, React])
         db.session.commit()
 
