@@ -11,6 +11,8 @@
 .projectContainer {
     position: relative;
     overflow-x: auto;
+    color: white;
+    border: solid;
 }
 
 .projectImg {

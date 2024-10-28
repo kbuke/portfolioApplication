@@ -10,6 +10,8 @@ import smtplib
 
 from email.mime.text import MIMEText
 
+from datetime import datetime
+
 class Profiles(Resource):
     def get(self):
         profiles = [profile.to_dict() for profile in Profile.query.all()]
@@ -96,6 +98,33 @@ class Project(Resource):
     def get(self):
         projects = [project.to_dict() for project in Projects.query.all()]
         return projects
+
+    def post(self):
+        json = request.get_json()
+        try:
+            # Convert dates to date format
+            start_date = datetime.strptime(json.get("startDate"), "%Y-%m-%d").date() if json.get("startDate") else None
+            end_date = datetime.strptime(json.get("endDate"), "%Y-%m-%d").date() if json.get("endDate") else None
+            
+            # Convert institute_id to integer
+            institute_id = int(json.get("instituteId")) if json.get("instituteId") else None
+            
+            new_project = Projects(
+                image = json.get("newImg"),
+                name = json.get("newName"),
+                git_hub_link = json.get("gitLink"),
+                blog_link = json.get("blogLink"),
+                start_date = start_date,
+                end_date = end_date,
+                institute_id = institute_id
+            )
+            db.session.add(new_project)
+            db.session.commit()
+            return new_project.to_dict(), 201
+        except ValueError as e:
+            return {
+                "error": [str(e)]
+            }, 400
 
 class Points(Resource):
     def get(self):

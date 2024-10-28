@@ -1,12 +1,14 @@
 .techContainer{
     color: "white"; 
     margin-bottom: "20px";
+    margin-right: 80px;
 }
 
 .techGrid{
     display: grid;
     grid-template-columns: repeat(2, auto);
     align-items: center;
+    margin-right: 80px;
 }
 
 .techLogoContainer{
@@ -35,11 +37,15 @@
 #techStackGrid{
     display: grid;
     color: white;
-    grid-template-columns: repeat(3, auto);
+    /* grid-template-columns: repeat(3, auto); */
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 20px;
     border-bottom: solid;
+    overflow-x: auto;
+    grid-auto-flow: column;
+    grid-auto-columns: 28%;
+    gap: 50px;
 }
 
 .addButton{

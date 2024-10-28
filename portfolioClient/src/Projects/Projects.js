@@ -5,12 +5,19 @@ import { Link } from "react-router-dom"
 
 import gitLogo from "../assets/gitHub.png"
 
+import NewProject from "./Components/NewProject"
+
 export default function Projects({
     projects,
-    setProjects
+    setProjects,
+    addButton,
+    loggedUser,
+    allInstitutes,
+    setAllInstitutes
 }){
 
     const [sortProjects, setSortProjects] = useState([])
+    const [newProject, setNewProject] = useState(false)
 
     //Use dependancy array to alter projects when changes made
     useEffect(() => {
@@ -94,14 +101,38 @@ export default function Projects({
             </div>
         );
     });
-    
-    
 
     return(
         <div
             id="projectRenderGrid"
         >
+            {newProject ? 
+                <NewProject 
+                    setNewProject={setNewProject}
+                    projects={projects}
+                    setProjects={setProjects}
+                    allInstitutes={allInstitutes}
+                    setAllInstitutes={setAllInstitutes}
+                />
+                :
+                null
+            }
+
             {renderProjects}
+
+            {loggedUser ?
+                <div
+                    className="techLogoContainer"
+                >
+                    <img
+                        src={addButton}
+                        className="addButton"
+                        onClick={() => setNewProject(true)}
+                    />
+                </div>
+                :
+                null
+            }
         </div>
     )
 }

@@ -59,6 +59,10 @@ export default function Home({
             <Projects 
                 projects={projects}
                 setProjects={setProjects}
+                addButton={addButton}
+                loggedUser={loggedUser}
+                allInstitutes={allInstitutes}
+                setAllInstitutes={setAllInstitutes}
             />
 
             <Email 

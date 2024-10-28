@@ -56,35 +56,42 @@ export default function TechStack({
         </div>
     ))
     return(
-        <div
-            id="techStackGrid"
-        >
-            {addStack ?
-                <NewStack 
-                    setAddStack={setAddStack}
-                    techStack={techStack}
-                    setTechStack={setTechStack}
-                />
-                :
-                null
-            }
-
-            {renderStack}
-
-            {loggedUser ?
-                <div
-                    className="techLogoContainer"
-                >
-                    <img 
-                        src={addButton}
-                        alt="add stack button"
-                        className="addButton"
-                        onClick={() => setAddStack(true)}
+        <>
+            <h1
+                style={{color: "white", marginLeft: "20px", fontSize: "350%"}}
+            >
+                Tech Stack
+            </h1>
+            <div
+                id="techStackGrid"
+            >
+                {addStack ?
+                    <NewStack 
+                        setAddStack={setAddStack}
+                        techStack={techStack}
+                        setTechStack={setTechStack}
                     />
-                </div>
-                :
-                null
-            }
-        </div>
+                    :
+                    null
+                }
+
+                {renderStack}
+
+                {loggedUser ?
+                    <div
+                        className="techLogoContainer"
+                    >
+                        <img 
+                            src={addButton}
+                            alt="add stack button"
+                            className="addButton"
+                            onClick={() => setAddStack(true)}
+                        />
+                    </div>
+                    :
+                    null
+                }
+            </div>
+        </>
     )
 }
