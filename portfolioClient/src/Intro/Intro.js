@@ -10,22 +10,35 @@ import Info from "./Components/Info";
 import Picture from "./Components/Picture";
 
 import Login from "./Components/Login";
+import EditInfo from "./Components/EditInfo";
+import AddInstitute from "./Components/AddInstitute";
+
 import { useState, useEffect } from "react";
 
-export default function Intro({ specificUserInfo, setLoggedUser, loggedUser }) {
+export default function Intro({ 
+    specificUserInfo, 
+    setLoggedUser, 
+    loggedUser, 
+    setUserInfo,
+    allInstitutes,
+    setAllInstitutes
+}) {
     const [login, setLogin] = useState(false)
 
+    const [editInfo, setEditInfo] = useState(false)
+
+    const [addInstitute, setAddInstitute] = useState(false)
+
     useEffect(() => {
-        if (login) {
+        if (login || editInfo) {
             document.body.classList.add("no-scroll");
         } else {
             document.body.classList.remove("no-scroll");
         }
         // Cleanup to remove the class if the component unmounts
         return () => document.body.classList.remove("no-scroll");
-    }, [login]);
+    }, [login, editInfo]);
 
-    console.log(specificUserInfo);
     return (
         <div style={{ display: "flex", color: "white", flexDirection: "column", borderBottom: "solid"}}>
             {login ? 
@@ -36,6 +49,27 @@ export default function Intro({ specificUserInfo, setLoggedUser, loggedUser }) {
                 : 
                 null
             }
+
+            {editInfo ?
+                <EditInfo 
+                    setEditInfo={setEditInfo}
+                    specificUserInfo={specificUserInfo}
+                    setUserInfo={setUserInfo}
+                />
+                :
+                null
+            }
+
+            {addInstitute ? 
+                <AddInstitute 
+                    allInstitutes={allInstitutes}
+                    setAllInstitutes={setAllInstitutes}
+                    setAddInstitute={setAddInstitute}
+                />
+                :
+                null
+            }
+
             <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
                 <div id="socialsGrid">
                     <Link className="linkednLink" to={`${specificUserInfo.linkdn_link}`}>
@@ -59,6 +93,8 @@ export default function Intro({ specificUserInfo, setLoggedUser, loggedUser }) {
                     setLogin={setLogin}
                     loggedUser={loggedUser}
                     setLoggedUser={setLoggedUser}
+                    setEditInfo={setEditInfo}
+                    setAddInstitute={setAddInstitute}
                 />
             </div>
         </div>

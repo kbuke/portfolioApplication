@@ -4,7 +4,6 @@ export default function TechStack({
     techStack,
     setTechStack
 }){
-    console.log(techStack)
 
     //Render tech stack
     const renderStack = techStack.map((tech, index) => (

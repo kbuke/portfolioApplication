@@ -8,7 +8,9 @@ import "./Picture.css"
 export default function Picture({
     setLogin,
     loggedUser,
-    setLoggedUser
+    setLoggedUser,
+    setEditInfo,
+    setAddInstitute
 }){
     const [hoverLogin, setHoverLogin] = useState(false)
     const [logOut, setLogOut] = useState(false)
@@ -21,7 +23,8 @@ export default function Picture({
                 style={{
                     maxWidth: "100%",
                     zIndex: "-0.5",
-                    marginBottom: "20px"
+                    marginBottom: "20px",
+                    height: "500px"
                 }}
             />
             {loggedUser ?
@@ -35,9 +38,17 @@ export default function Picture({
                             Logout
                         </button>
 
-                        <button>Edit your information</button>
+                        <button
+                            onClick={() => setEditInfo(true)}
+                        >
+                            Edit your information
+                        </button>
 
-                        <button>Add Institute</button>
+                        <button
+                            onClick={() => setAddInstitute(true)}
+                        >
+                            Add Institute
+                        </button>
                     </div>
 
                     {logOut ? 

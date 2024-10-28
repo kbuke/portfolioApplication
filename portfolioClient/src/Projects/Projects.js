@@ -17,8 +17,6 @@ export default function Projects({
         setSortProjects(projects.sort((a, b) => new Date(b.start_date) - new Date(a.start_date)))
     }, [projects])
 
-    console.log(sortProjects)
-
     const renderProjects = sortProjects.map((project, index) => {
         const projectName = project.name;
         const projectImg = project.image;

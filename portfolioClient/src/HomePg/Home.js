@@ -5,9 +5,11 @@ import TechStack from "../TechStack/TechStack"
 import Projects from "../Projects/Projects"
 
 import Email from "../Emails/Email"
+import { useEffect, useState } from "react"
 
 export default function Home({
     userInfo,
+    setUserInfo,
 
     techStack,
     setTechStack,
@@ -19,12 +21,20 @@ export default function Home({
     setAllEmails,
 
     loggedUser,
-    setLoggedUser
+    setLoggedUser,
+
+    allInstitutes,
+    setAllInstitutes
 }){
+    const [specificUserInfo, setSpecificUserInfo] = useState([])
 
-    const specificUserInfo = userInfo[0]? userInfo[0] : []
+    console.log(userInfo)
 
-    console.log(loggedUser)
+    useEffect(() => {
+        setSpecificUserInfo(userInfo[0] ? userInfo[0] : [])
+    }, [userInfo])
+
+    // const specificUserInfo = userInfo[0]? userInfo[0] : []
 
     return(
         <div>
@@ -32,6 +42,9 @@ export default function Home({
                 specificUserInfo={specificUserInfo}
                 setLoggedUser={setLoggedUser}
                 loggedUser={loggedUser}
+                setUserInfo={setUserInfo}
+                allInstitutes={allInstitutes}
+                setAllInstitutes={setAllInstitutes}
             />
 
             <TechStack 

@@ -21,6 +21,9 @@ function App() {
   //Set state for logged user
   const [loggedUser, setLoggedUser] = useState([])
 
+  //Set state for registered institutes
+  const [allInstitutes, setAllInstitutes] = useState([])
+
   //Fetch user info
   useEffect(() => {
     fetch("/profile")
@@ -68,6 +71,18 @@ function App() {
     .then(email => setAllEmails(email))
   }, [])
 
+  //Fetch all institutes
+  useEffect(() => {
+    fetch("/institutes")
+    .then(r => {
+      if(r.ok){
+        return r.json()
+      }
+      throw r 
+    })
+    .then(institutes => setAllInstitutes(institutes))
+  }, [])
+
   //Fetch logged user
   useEffect(() => {
     fetch("/check_session")
@@ -75,7 +90,6 @@ function App() {
       if(r.ok) {
         return r.json()
         .then(loggedUser => {
-          console.log(typeof loggedUser)
           if(loggedUser.message === "Unauthorized user"){
             setLoggedUser(null)
           } else {
@@ -94,6 +108,7 @@ function App() {
     >
       <Home 
         userInfo={userInfo}
+        setUserInfo={setUserInfo}
 
         techStack={techStack}
         setTechStack={setTechStack}
@@ -106,6 +121,9 @@ function App() {
 
         loggedUser={loggedUser}
         setLoggedUser={setLoggedUser}
+
+        allInstitutes={allInstitutes}
+        setAllInstitutes={setAllInstitutes}
       />
     </div>
   )

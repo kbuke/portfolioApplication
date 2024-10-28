@@ -14,6 +14,41 @@ class Profiles(Resource):
     def get(self):
         profiles = [profile.to_dict() for profile in Profile.query.all()]
         return profiles, 200
+    
+
+class ProfilesId(Resource):
+    def get(self, id):
+        user_info = Profile.query.filter(Profile.id==id).first()
+        if user_info:
+            return make_response(user_info.to_dict(), 201)
+        return {
+            "error": "user not found"
+        }, 404
+    
+    def patch(self, id):
+        data = request.get_json()
+        user_info = Profile.query.filter(Profile.id == id).first()
+
+        if user_info:
+            try:
+                # Handle password hashing separately
+                if '_password_hash' in data:
+                    user_info.password_hash = data.pop('_password_hash')  # Use the setter to hash the password
+
+                # Set other attributes
+                for attr, value in data.items():
+                    setattr(user_info, attr, value)
+
+                db.session.commit()
+
+                return make_response(user_info.to_dict(), 202)
+            except ValueError:
+                return {
+                    "error": ["Validation Error"]
+                }, 400
+        return {
+            "error": "Profile not found"
+        }, 404
 
 class Technologies(Resource):
     def get(self):
@@ -24,6 +59,22 @@ class Institutes(Resource):
     def get(self):
         institutes = [institute.to_dict() for institute in Institute.query.all()]
         return institutes
+    
+    def post(self):
+        json = request.get_json()
+        try:
+            new_institute = Institute(
+                name = json.get("instituteName"),
+                logo = json.get("instituteLogo"),
+                location = json.get("instituteLocation")
+            )
+            db.session.add(new_institute)
+            db.session.commit()
+            return new_institute.to_dict(), 201 
+        except ValueError as e:
+            return{
+                "error": [str(e)]
+            }, 400
 
 class Project(Resource):
     def get(self):
@@ -131,6 +182,8 @@ class Email(Resource):
             return {"error": "Failed to send email: " + str(smtp_error)}, 500
 
 api.add_resource(Profiles, '/profile')
+api.add_resource(ProfilesId, '/profiles/<int:id>')
+
 api.add_resource(Technologies, '/technologies')
 api.add_resource(Institutes, '/institutes')
 api.add_resource(Project, '/projects')

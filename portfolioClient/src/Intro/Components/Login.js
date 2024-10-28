@@ -33,7 +33,7 @@ export default function Login({
     }
     return(
         <form
-            id="loginPopUp"
+            id="popUp"
             onSubmit={handleLogin}
         >
             <div
