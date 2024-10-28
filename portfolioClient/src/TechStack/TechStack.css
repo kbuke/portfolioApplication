@@ -1,0 +1,50 @@
+.techContainer{
+    color: "white"; 
+    margin-bottom: "20px";
+}
+
+.techGrid{
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    align-items: center;
+}
+
+.techLogoContainer{
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.techLogo{
+    height: 100%;
+    width: 100%
+}
+
+.techName{
+    font-size: 300%;
+    text-decoration: underline;
+    margin-bottom: 0px
+}
+
+#techStackGrid{
+    display: grid;
+    color: white;
+    grid-template-columns: repeat(3, auto);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    border-bottom: solid;
+}
+
+.addButton{
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    cursor: pointer;
+}

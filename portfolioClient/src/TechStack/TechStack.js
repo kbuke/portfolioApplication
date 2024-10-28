@@ -1,57 +1,43 @@
+import { useEffect, useState } from "react"
 
+import "./TechStack.css"
+import NewStack from "./Components/NewStack"
 
 export default function TechStack({
     techStack,
-    setTechStack
+    setTechStack,
+    loggedUser,
+    addButton
 }){
+    const [specificTechStack, setSpecificTechStack] = useState([])
+    const [addStack, setAddStack] = useState(false)
+
+    useEffect(() => (
+        setSpecificTechStack(techStack)
+    ), [techStack])
 
     //Render tech stack
-    const renderStack = techStack.map((tech, index) => (
+    const renderStack = specificTechStack.map((tech, index) => (
         <div
             key={index}
             className="techContainer"
-            style={{color: "white", marginBottom: "20px"}}
         >
             <div
                 className="techGrid"
-                style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(2, auto)",
-                    alignItems: "center",
-                }}
             >
                 <div
                     className="techLogoContainer"
-                    style={{
-                        height: "150px",
-                        width: "150px",
-                        borderRadius: "50%",
-                        overflow: "hidden",
-                        marginTop: "20px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }}
                 >
                     <img 
                         className="techLogo"
                         src={tech.logo}
                         alt={`${tech.name} Logo`}
-                        style={{
-                            height: "100%",
-                            width: "100%"
-                        }}
                     />
                 </div>
                 
                 <div>
                     <h1
                         className="techName"
-                        style={{
-                            fontSize: "300%",
-                            textDecoration: "underline",
-                            marginBottom: "0px"
-                        }}
                     >
                         {tech.name}
                     </h1>
@@ -72,17 +58,33 @@ export default function TechStack({
     return(
         <div
             id="techStackGrid"
-            style={{
-                display: "grid",
-                color: "white",
-                gridTemplateColumns: "repeat(3, auto)",
-                marginLeft: "20px",
-                marginRight: "20px",
-                marginBottom: "20px",
-                borderBottom: "solid",
-            }}
         >
+            {addStack ?
+                <NewStack 
+                    setAddStack={setAddStack}
+                    techStack={techStack}
+                    setTechStack={setTechStack}
+                />
+                :
+                null
+            }
+
             {renderStack}
+
+            {loggedUser ?
+                <div
+                    className="techLogoContainer"
+                >
+                    <img 
+                        src={addButton}
+                        alt="add stack button"
+                        className="addButton"
+                        onClick={() => setAddStack(true)}
+                    />
+                </div>
+                :
+                null
+            }
         </div>
     )
 }

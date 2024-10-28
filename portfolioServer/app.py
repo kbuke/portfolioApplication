@@ -55,6 +55,22 @@ class Technologies(Resource):
         languages = [language.to_dict() for language in Languages.query.all()]
         return languages
 
+    def post(self):
+        json = request.get_json()
+        try:
+            new_stack = Languages(
+                logo = json.get("stackLogo"),
+                name = json.get("stackName"),
+                experience = json.get("stackExperience")
+            )
+            db.session.add(new_stack)
+            db.session.commit()
+            return new_stack.to_dict(), 201
+        except ValueError as e:
+            return{
+                "error": [str(e)]
+            }, 400
+
 class Institutes(Resource):
     def get(self):
         institutes = [institute.to_dict() for institute in Institute.query.all()]

@@ -78,6 +78,8 @@ class Languages(db.Model, SerializerMixin):
     #Add serialize rules
     serialize_rules = (
         "-projects",
+        "-project_language",
+        "-project_id",
     )
 
 

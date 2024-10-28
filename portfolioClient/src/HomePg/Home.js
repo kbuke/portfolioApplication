@@ -7,6 +7,8 @@ import Projects from "../Projects/Projects"
 import Email from "../Emails/Email"
 import { useEffect, useState } from "react"
 
+import addButton from "../assets/plusIcon.png"
+
 export default function Home({
     userInfo,
     setUserInfo,
@@ -28,11 +30,11 @@ export default function Home({
 }){
     const [specificUserInfo, setSpecificUserInfo] = useState([])
 
-    console.log(userInfo)
 
     useEffect(() => {
         setSpecificUserInfo(userInfo[0] ? userInfo[0] : [])
     }, [userInfo])
+
 
     // const specificUserInfo = userInfo[0]? userInfo[0] : []
 
@@ -50,6 +52,8 @@ export default function Home({
             <TechStack 
                 techStack={techStack}
                 setTechStack={setTechStack}
+                loggedUser={loggedUser}
+                addButton={addButton}
             />
 
             <Projects 
