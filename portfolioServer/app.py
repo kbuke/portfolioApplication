@@ -43,19 +43,24 @@ class ProjectLanguage(Resource):
 class Login(Resource):
     def post(self):
         json = request.get_json()
-        email = json.get("email")
+        email = json.get("email").strip()  # Remove any accidental spaces
         password = json.get("password")
 
+        print(f"Received email: {email}")
+        print(f"Received password: {password}")
+
         if not email or not password:
-            return {"error": "Name and Password required"}, 400
-        
+            return {"error": "Email and Password required"}, 400
+
         user = Profile.query.filter(Profile.email == email).first()
+        print(f"Queried user: {user}")  # This should print None if email doesn't match exactly
 
         if user and user.authenticate(password):
-            session["user_id"] = user.id 
-            return user.to_dict(), 200 
-        
-        return {"error": "Invalid username or password"}
+            session["user_id"] = user.id
+            return user.to_dict(), 200
+
+        return {"error": "Invalid email or password"}, 401
+
 
 class Logout(Resource):
     def delete(self):
