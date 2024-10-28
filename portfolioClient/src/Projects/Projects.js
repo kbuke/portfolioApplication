@@ -22,29 +22,31 @@ export default function Projects({
     const renderProjects = sortProjects.map((project, index) => {
         const projectName = project.name;
         const projectImg = project.image;
-
-        const projectInstitution = project.institutes
-        const instituteLogo = projectInstitution.logo
-        const instituteName = projectInstitution.name 
-
-        const gitLink = project.git_hub_link ? project.git_hub_link : null 
-        const blogLink = project.blog_link ? project.blog_link : null 
-
-        const projectPoints = project.points
+    
+        const projectInstitution = project.institutes;
+        const instituteLogo = projectInstitution.logo;
+        const instituteName = projectInstitution.name;
+    
+        const gitLink = project.git_hub_link ? project.git_hub_link : null;
+        const blogLink = project.blog_link ? project.blog_link : null;
+    
+        const projectStacks = project.project_language;
+        const specificProjectStack = projectStacks.map((project) => project.languages.name);
+    
+        const projectPoints = project.points;
         const renderPoints = projectPoints.map((points, index) => (
             <li
                 key={index}
                 className="pointsList"
-                style={{marginBottom: "20px"}}
+                style={{ marginBottom: "20px" }}
             >
                 {points.point}
             </li>
-        ))
+        ));
+    
         return (
-            <div
-                style={{display: "flex", flexDirection: "column"}}
-            >
-                <div className="projectContainer" key={index}>
+            <div style={{ display: "flex", flexDirection: "column" }} key={index}>
+                <div className="projectContainer">
                     <img 
                         alt={`${projectName} Image`}
                         src={projectImg}
@@ -56,27 +58,22 @@ export default function Projects({
                             src={instituteLogo}
                             className="instituteLogo"
                         />
-
+    
                         <ul>{renderPoints}</ul>
-
-                        <div
-                            style={{display: "grid", gridTemplateColumns: "repeat(2, 1fr)", marginRight: "20px", marginLeft: "20px"}}
-                        >
-                            <Link
-                                to={gitLink}
-                                className="linkContainer"
-                            >
+    
+                        <div id="projectLinkGrid">
+                            <Link to={gitLink} className="linkContainer">
                                 <img 
                                     alt={"Git Hub link"}
                                     src={gitLogo}
                                     className="linkImg"
                                 />
                             </Link>
-
+    
                             <Link
                                 to={blogLink}
                                 className="linkContainer"
-                                style={{alignSelf: "end"}}
+                                style={{ alignSelf: "end" }}
                             >
                                 <img 
                                     alt={"BlogLink"}
@@ -87,14 +84,19 @@ export default function Projects({
                         </div>
                     </div>
                 </div>
-                <h3 
-                    className="projectTitle"
-                >
-                    {projectName}
-                </h3>
+                <h3 className="projectTitle">{projectName}</h3>
+    
+                <div className="projectStacks">
+                    <h3
+                        style={{marginTop: "0px", fontWeight: 300}}
+                    >
+                        {specificProjectStack.join(" | ")}
+                    </h3>
+                </div>
             </div>
         );
     });
+    
     
 
     return(

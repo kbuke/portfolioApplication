@@ -2,7 +2,7 @@ from flask import request, make_response, session
 
 from config import app, db, api, os
 
-from models import Profile, Languages, Institute, Projects, ProjectPoints, Emails
+from models import Profile, Languages, Institute, Projects, ProjectPoints, Emails, ProjectLanguages
 
 from flask_restful import Resource 
 
@@ -34,6 +34,11 @@ class Points(Resource):
     def get(self):
         points = [point.to_dict() for point in ProjectPoints.query.all()]
         return points 
+
+class ProjectLanguage(Resource):
+    def get(self):
+        project_tech = [tech.to_dict() for tech in ProjectLanguages.query.all()]
+        return project_tech
 
 class Email(Resource):
     def get(self):
@@ -91,6 +96,7 @@ api.add_resource(Institutes, '/institutes')
 api.add_resource(Project, '/projects')
 api.add_resource(Points, '/points')
 api.add_resource(Email, '/emails')
+api.add_resource(ProjectLanguage, '/projecttech')
 
 
 if __name__ == "__main__":

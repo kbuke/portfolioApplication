@@ -41,6 +41,7 @@
     text-decoration: underline;
     font-size: 190%;
     margin-top: 0px;
+    margin-bottom: 5px;
 }
 
 .instituteLogo{
@@ -65,4 +66,12 @@
 .linkImg{
     max-height: 100%;
     max-width: 100%;
+}
+
+#projectLinkGrid{
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    gap: 200px;
+    grid-template-columns: repeat(2, auto)
 }

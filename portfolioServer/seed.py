@@ -1,4 +1,4 @@
-from models import Profile, Institute, Languages, Projects, ProjectPoints
+from models import Profile, Institute, Languages, Projects, ProjectPoints, ProjectLanguages
 
 from app import app 
 from config import db 
@@ -106,6 +106,24 @@ if __name__ == "__main__":
             project_id = 2
         )
         db.session.add_all([nihongoP1, nihongoP2, pokedex1])
+        db.session.commit()
+
+        print("Seeding project tech stacks")
+        nihongo_html = ProjectLanguages(
+            language_id = 1,
+            project_id = 1
+        )
+
+        nihongo_js = ProjectLanguages(
+            language_id = 2,
+            project_id = 1
+        )
+
+        pokedex_html = ProjectLanguages(
+            language_id = 1,
+            project_id = 2
+        )
+        db.session.add_all([nihongo_html, nihongo_js, pokedex_html])
         db.session.commit()
 
         

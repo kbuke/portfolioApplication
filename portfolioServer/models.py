@@ -47,7 +47,7 @@ class Profile(db.Model, SerializerMixin):
 
 
 class Institute(db.Model, SerializerMixin):
-    __tablename__ = "Institutes"
+    __tablename__ = "institutes"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -64,16 +64,25 @@ class Institute(db.Model, SerializerMixin):
 
 
 class Languages(db.Model, SerializerMixin):
-    __tablename__ = "Languages"
+    __tablename__ = "languages"
 
     id=db.Column(db.Integer, primary_key=True)
     logo = db.Column(db.String, nullable=True)
     name = db.Column(db.String, nullable=False)
     experience = db.Column(db.String, nullable=False)
 
+    #Add relations 
+    project_id = db.Column(db.Integer, db.ForeignKey("projects.id"))
+    project_language = db.relationship("ProjectLanguages", backref="languages")
+
+    #Add serialize rules
+    serialize_rules = (
+        "-projects",
+    )
+
 
 class Projects(db.Model, SerializerMixin):
-    __tablename__ = "Projects"
+    __tablename__ = "projects"
 
     id = db.Column(db.Integer, primary_key=True)
     image = db.Column(db.String, nullable=False)
@@ -84,13 +93,13 @@ class Projects(db.Model, SerializerMixin):
     end_date = db.Column(db.Date, nullable=False)
 
     #Set up relations
-    institute_id = db.Column(db.Integer, db.ForeignKey("Institutes.id"))
+    institute_id = db.Column(db.Integer, db.ForeignKey("institutes.id"))
     points = db.relationship("ProjectPoints", backref="projects")
+    project_language = db.relationship("ProjectLanguages", backref="projects")
 
     #Add serialize rules
     serialize_rules = (
         "-institutes.projects",
-        "-languages.projects",
     )
 
 class ProjectPoints(db.Model, SerializerMixin):
@@ -100,7 +109,7 @@ class ProjectPoints(db.Model, SerializerMixin):
     point = db.Column(db.String, nullable=False)
 
     #Set up relations
-    project_id = db.Column(db.Integer, db.ForeignKey("Projects.id"))
+    project_id = db.Column(db.Integer, db.ForeignKey("projects.id"))
 
     #Add serialize rules
     serialize_rules = (
@@ -116,3 +125,18 @@ class Emails(db.Model, SerializerMixin):
     sender_company = db.Column(db.String, nullable=False)
     subject = db.Column(db.String, nullable=False)
     message = db.Column(db.String, nullable=False)
+
+class ProjectLanguages(db.Model, SerializerMixin):
+    __tablename__ = "project_languages"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    language_id = db.Column(db.ForeignKey("languages.id"), nullable=False)
+    project_id = db.Column(db.ForeignKey("projects.id"), nullable=False)
+
+    serialize_rules = (
+        "-languages.project_language",
+        "-project_language.project_id",
+        "-project_language.language_id",
+        "-projects",
+    )
