@@ -58,7 +58,7 @@ export default function TechStack({
     return(
         <>
             <h1
-                style={{color: "white", marginLeft: "20px", fontSize: "350%"}}
+                id="subHeadings"
             >
                 Tech Stack
             </h1>

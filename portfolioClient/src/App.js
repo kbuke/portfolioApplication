@@ -24,6 +24,12 @@ function App() {
   //Set state for registered institutes
   const [allInstitutes, setAllInstitutes] = useState([])
 
+  //Set state for project stacks
+  const [projectStack, setProjectStack] = useState([])
+
+  //Set state for project points
+  const [projectPoints, setProjectPoints] = useState([])
+
   //Fetch user info
   useEffect(() => {
     fetch("/profile")
@@ -100,6 +106,32 @@ function App() {
     })
   }, [])
 
+  //Fetch project points
+  useEffect(() => {
+    fetch("/points")
+    .then(r => {
+      if(r.ok) {
+        return r.json()
+      }
+      throw r 
+    })
+    .then(points => setProjectPoints(points))
+  }, [])
+
+  //Fetch project stack
+  useEffect(() => {
+    fetch("/projecttech")
+    .then(r => {
+      if(r.ok) {
+        return r.json()
+      }
+      throw r 
+    })
+    .then(tech => setProjectStack(tech))
+  }, [])
+
+  console.log(projectStack)
+
   return(
     <div
       style={{
@@ -124,6 +156,12 @@ function App() {
 
         allInstitutes={allInstitutes}
         setAllInstitutes={setAllInstitutes}
+
+        projectStack={projectStack}
+        setProjectStack={setProjectStack}
+
+        projectPoints={projectPoints}
+        setProjectPoints={setProjectPoints}
       />
     </div>
   )

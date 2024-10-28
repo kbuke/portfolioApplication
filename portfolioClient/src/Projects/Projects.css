@@ -51,6 +51,7 @@
     width: 80px;
     border-radius: 50%;
     align-self: center;
+    margin-top: 5px;
 }
 
 .pointsList{
@@ -76,4 +77,20 @@
     align-items: center;
     gap: 200px;
     grid-template-columns: repeat(2, auto)
+}
+
+#newProjectStackButton{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.newPointContainer{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    justify-self: center;
+    align-self: center;
 }

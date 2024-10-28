@@ -130,11 +130,41 @@ class Points(Resource):
     def get(self):
         points = [point.to_dict() for point in ProjectPoints.query.all()]
         return points 
+    
+    def post(self):
+        json=request.get_json()
+        try:
+            new_point = ProjectPoints(
+                point = json.get("newProjectPoint"),
+                project_id = json.get("projectId")
+            )
+            db.session.add(new_point)
+            db.session.commit()
+            return new_point.to_dict(), 201 
+        except ValueError as e:
+            return{
+                "error": [str(e)]
+            }, 400
 
 class ProjectLanguage(Resource):
     def get(self):
         project_tech = [tech.to_dict() for tech in ProjectLanguages.query.all()]
         return project_tech
+
+    def post(self):
+        json = request.get_json()
+        try:
+            new_combo = ProjectLanguages(
+                language_id = json.get("stackId"),
+                project_id = json.get("projectId")
+            )
+            db.session.add(new_combo)
+            db.session.commit()
+            return new_combo.to_dict(), 201 
+        except ValueError as e:
+            return{
+                "error": [str(e)]
+            }, 400
 
 class Login(Resource):
     def post(self):

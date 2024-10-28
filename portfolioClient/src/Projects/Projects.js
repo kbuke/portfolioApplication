@@ -7,26 +7,56 @@ import gitLogo from "../assets/gitHub.png"
 
 import NewProject from "./Components/NewProject"
 
+import NewProjectStack from "./Components/NewProjectStack"
+
+import NewPoint from "./Components/NewPoint"
+
 export default function Projects({
     projects,
     setProjects,
     addButton,
     loggedUser,
     allInstitutes,
-    setAllInstitutes
+    setAllInstitutes,
+    techStack,
+    projectStack,
+    setProjectStack,
+    projectPoints,
+    setProjectPoints
 }){
+    console.log(projectStack)
 
     const [sortProjects, setSortProjects] = useState([])
     const [newProject, setNewProject] = useState(false)
 
+    const [newStack, setNewStack] = useState(false)
+
+    const [projectId, setProjectId] = useState()
+
+    const [newPoint, setNewPoint] = useState(false)
+
+    const handleProjectStack = (identity) => {
+        setProjectId(identity)
+        setNewStack(true)
+    }
+
+    const handleProjectPoint = (identity) => {
+        setNewPoint(true)
+        setProjectId(identity)
+    }
+
+    console.log(`I have selected project ${projectId}`)
+
     //Use dependancy array to alter projects when changes made
     useEffect(() => {
         setSortProjects(projects.sort((a, b) => new Date(b.start_date) - new Date(a.start_date)))
-    }, [projects])
+    }, [projects, projectStack, projectPoints])
 
     const renderProjects = sortProjects.map((project, index) => {
         const projectName = project.name;
         const projectImg = project.image;
+
+        console.log(project)
     
         const projectInstitution = project.institutes;
         const instituteLogo = projectInstitution.logo;
@@ -36,7 +66,8 @@ export default function Projects({
         const blogLink = project.blog_link ? project.blog_link : null;
     
         const projectStacks = project.project_language;
-        const specificProjectStack = projectStacks.map((project) => project.languages.name);
+        const specificProjectStack = [...new Set(projectStacks.map((project) => project.languages.name))];
+
     
         const projectPoints = project.points;
         const renderPoints = projectPoints.map((points, index) => (
@@ -65,27 +96,49 @@ export default function Projects({
                         />
     
                         <ul>{renderPoints}</ul>
-    
-                        <div id="projectLinkGrid">
-                            <Link to={gitLink} className="linkContainer">
-                                <img 
-                                    alt={"Git Hub link"}
-                                    src={gitLogo}
-                                    className="linkImg"
-                                />
-                            </Link>
-    
-                            <Link
-                                to={blogLink}
-                                className="linkContainer"
-                                style={{ alignSelf: "end" }}
+
+                        {loggedUser ?
+                            <div
+                                className="newPointContainer"
                             >
                                 <img 
-                                    alt={"BlogLink"}
-                                    src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiix8XOZ_wZxRWWcSuaKdxR9Ya7Q7EiBm33Q&s"}
-                                    className="linkImg"
+                                    src={addButton}
+                                    className="addButton"
+                                    onClick={() => handleProjectPoint(project.id)}
                                 />
-                            </Link>
+                            </div>
+                            :
+                            null
+                        }
+
+                        <div id="projectLinkGrid">
+                            {gitLink ?
+                                <Link to={gitLink} className="linkContainer">
+                                    <img 
+                                        alt={"Git Hub link"}
+                                        src={gitLogo}
+                                        className="linkImg"
+                                    />
+                                </Link>
+                                :
+                                null
+                            }
+    
+                            {blogLink ?
+                                <Link
+                                    to={blogLink}
+                                    className="linkContainer"
+                                    style={{ alignSelf: "end" }}
+                                >
+                                    <img 
+                                        alt={"BlogLink"}
+                                        src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiix8XOZ_wZxRWWcSuaKdxR9Ya7Q7EiBm33Q&s"}
+                                        className="linkImg"
+                                    />
+                                </Link>
+                                :
+                                null
+                            }
                         </div>
                     </div>
                 </div>
@@ -98,41 +151,87 @@ export default function Projects({
                         {specificProjectStack.join(" | ")}
                     </h3>
                 </div>
+
+                {loggedUser ?
+                    <div
+                        id="newProjectStackButton"
+                        onClick={() => handleProjectStack(project.id)}
+                    >
+                        <img 
+                            src={addButton}
+                            alt="add new project stack"
+                            className="addButton"
+                        />
+                    </div>
+                    :
+                    null
+                }
             </div>
         );
     });
 
     return(
-        <div
-            id="projectRenderGrid"
-        >
-            {newProject ? 
-                <NewProject 
-                    setNewProject={setNewProject}
-                    projects={projects}
-                    setProjects={setProjects}
-                    allInstitutes={allInstitutes}
-                    setAllInstitutes={setAllInstitutes}
-                />
-                :
-                null
-            }
+        <>
+            <h1
+                id="subHeadings"
+            >
+                Projects
+            </h1>
 
-            {renderProjects}
-
-            {loggedUser ?
-                <div
-                    className="techLogoContainer"
-                >
-                    <img
-                        src={addButton}
-                        className="addButton"
-                        onClick={() => setNewProject(true)}
+            <div
+                id="projectRenderGrid"
+            >
+                {newProject ? 
+                    <NewProject 
+                        setNewProject={setNewProject}
+                        projects={projects}
+                        setProjects={setProjects}
+                        allInstitutes={allInstitutes}
+                        setAllInstitutes={setAllInstitutes}
                     />
-                </div>
-                :
-                null
-            }
-        </div>
+                    :
+                    null
+                }
+
+                {newStack ?
+                    <NewProjectStack 
+                        techStack={techStack}
+                        projectId={projectId}
+                        setNewStack={setNewStack}
+                        projectStack={projectStack}
+                        setProjectStack={setProjectStack}
+                    />
+                    :
+                    null
+                }
+
+                {newPoint ?
+                    <NewPoint 
+                        projectId={projectId}
+                        projectPoints={projectPoints}
+                        setProjectPoints={setProjectPoints}
+                        setNewPoint={setNewPoint}
+                    />
+                    :
+                    null
+                }
+
+                {renderProjects}
+
+                {loggedUser ?
+                    <div
+                        className="techLogoContainer"
+                    >
+                        <img
+                            src={addButton}
+                            className="addButton"
+                            onClick={() => setNewProject(true)}
+                        />
+                    </div>
+                    :
+                    null
+                }
+            </div>
+        </>
     )
 }

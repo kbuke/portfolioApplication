@@ -26,7 +26,13 @@ export default function Home({
     setLoggedUser,
 
     allInstitutes,
-    setAllInstitutes
+    setAllInstitutes,
+
+    projectStack,
+    setProjectStack,
+
+    projectPoints,
+    setProjectPoints
 }){
     const [specificUserInfo, setSpecificUserInfo] = useState([])
 
@@ -63,6 +69,11 @@ export default function Home({
                 loggedUser={loggedUser}
                 allInstitutes={allInstitutes}
                 setAllInstitutes={setAllInstitutes}
+                techStack={techStack}
+                projectStack={projectStack}
+                setProjectStack={setProjectStack}
+                projectPoints={projectPoints}
+                setProjectPoints={setProjectPoints}
             />
 
             <Email 
