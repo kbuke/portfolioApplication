@@ -1,13 +1,17 @@
 import { useState } from "react"
 import profilePic from "../../assets/profilePic.jpeg"
 
+import LogOut from "./LogOut"
+
 import "./Picture.css"
 
 export default function Picture({
     setLogin,
-    loggedUser
+    loggedUser,
+    setLoggedUser
 }){
     const [hoverLogin, setHoverLogin] = useState(false)
+    const [logOut, setLogOut] = useState(false)
 
     return(
         <div>
@@ -21,7 +25,30 @@ export default function Picture({
                 }}
             />
             {loggedUser ?
-                <button>LogOut</button>
+                <>
+                    <div
+                        id="loggedInOptionsGrid"
+                    >
+                        <button
+                            onClick={() => setLogOut(true)}
+                        >
+                            Logout
+                        </button>
+
+                        <button>Edit your information</button>
+
+                        <button>Add Institute</button>
+                    </div>
+
+                    {logOut ? 
+                        <LogOut 
+                            setLogOut={setLogOut}
+                            setLoggedUser={setLoggedUser}
+                        />
+                        :
+                        null
+                    }
+                </>
                 :
                 <button
                     className="loginButton"

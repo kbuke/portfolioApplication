@@ -58,6 +58,7 @@ export default function Intro({ specificUserInfo, setLoggedUser, loggedUser }) {
                 <Picture 
                     setLogin={setLogin}
                     loggedUser={loggedUser}
+                    setLoggedUser={setLoggedUser}
                 />
             </div>
         </div>
