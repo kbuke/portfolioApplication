@@ -40,6 +40,41 @@ class ProjectLanguage(Resource):
         project_tech = [tech.to_dict() for tech in ProjectLanguages.query.all()]
         return project_tech
 
+class Login(Resource):
+    def post(self):
+        json = request.get_json()
+        email = json.get("email")
+        password = json.get("password")
+
+        if not email or not password:
+            return {"error": "Name and Password required"}, 400
+        
+        user = Profile.query.filter(Profile.email == email).first()
+
+        if user and user.authenticate(password):
+            session["user_id"] = user.id 
+            return user.to_dict(), 200 
+        
+        return {"error": "Invalid username or password"}
+
+class Logout(Resource):
+    def delete(self):
+        user_id = session.get("user_id")
+        if user_id:
+            session.pop("user_id")
+            return {}, 204 
+        return {"message": "Unauthorized"}, 401
+
+class CheckSession(Resource):
+    def get(self):
+        user_id = session.get("user_id")
+        if user_id:
+            user = Profile.query.filter(Profile.id == user_id).first()
+            if user:
+                return user.to_dict(), 200 
+        return {"message": "Unauthorized user"}
+
+
 class Email(Resource):
     def get(self):
         emails = [email.to_dict() for email in Emails.query.all()]
@@ -97,6 +132,9 @@ api.add_resource(Project, '/projects')
 api.add_resource(Points, '/points')
 api.add_resource(Email, '/emails')
 api.add_resource(ProjectLanguage, '/projecttech')
+api.add_resource(Login, '/login')
+api.add_resource(Logout, '/logout')
+api.add_resource(CheckSession, '/check_session')
 
 
 if __name__ == "__main__":

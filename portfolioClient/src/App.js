@@ -18,6 +18,9 @@ function App() {
   //Set state for emails
   const [allEmails, setAllEmails] = useState([])
 
+  //Set state for logged user
+  const [loggedUser, setLoggedUser] = useState([])
+
   //Fetch user info
   useEffect(() => {
     fetch("/profile")
@@ -65,6 +68,24 @@ function App() {
     .then(email => setAllEmails(email))
   }, [])
 
+  //Fetch logged user
+  useEffect(() => {
+    fetch("/check_session")
+    .then(r => {
+      if(r.ok) {
+        return r.json()
+        .then(loggedUser => {
+          console.log(typeof loggedUser)
+          if(loggedUser.message === "Unauthorized user"){
+            setLoggedUser(null)
+          } else {
+            setLoggedUser(loggedUser)
+          }
+        })
+      }
+    })
+  }, [])
+
   return(
     <div
       style={{
@@ -82,6 +103,9 @@ function App() {
 
         allEmails={allEmails}
         setAllEmails={setAllEmails}
+
+        loggedUser={loggedUser}
+        setLoggedUser={setLoggedUser}
       />
     </div>
   )

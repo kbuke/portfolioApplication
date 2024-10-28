@@ -1,6 +1,14 @@
+import { useState } from "react"
 import profilePic from "../../assets/profilePic.jpeg"
 
-export default function Picture(){
+import "./Picture.css"
+
+export default function Picture({
+    setLogin,
+    loggedUser
+}){
+    const [hoverLogin, setHoverLogin] = useState(false)
+
     return(
         <div>
             <img 
@@ -12,6 +20,20 @@ export default function Picture(){
                     marginBottom: "20px"
                 }}
             />
+            {loggedUser ?
+                <button>LogOut</button>
+                :
+                <button
+                    className="loginButton"
+                    onMouseEnter={() => setHoverLogin(true)}
+                    onMouseLeave={() => setHoverLogin(false)}
+                    id={hoverLogin? "showLogin" : ""}
+                    style={{justifySelf: "center", alignSelf: "center"}}
+                    onClick={() => setLogin(true)}
+                >
+                    Login
+                </button>
+            }
         </div>
     )
 }

@@ -16,17 +16,22 @@ export default function Home({
     setProjects,
 
     allEmails,
-    setAllEmails
+    setAllEmails,
+
+    loggedUser,
+    setLoggedUser
 }){
 
     const specificUserInfo = userInfo[0]? userInfo[0] : []
 
-    console.log(specificUserInfo)
+    console.log(loggedUser)
 
     return(
         <div>
             <Intro 
                 specificUserInfo={specificUserInfo}
+                setLoggedUser={setLoggedUser}
+                loggedUser={loggedUser}
             />
 
             <TechStack 

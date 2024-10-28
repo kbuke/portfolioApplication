@@ -1,0 +1,13 @@
+.loginButton{
+    background-color: black;
+    border: none;
+}
+
+#showLogin{
+    background-color: white;
+    margin-bottom: 20px;
+    width: 80px;
+    height: 40px;
+    border-radius: 18px;
+    cursor: pointer;
+}
