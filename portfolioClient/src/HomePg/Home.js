@@ -8,6 +8,8 @@ import Email from "../Emails/Email"
 import { useEffect, useState } from "react"
 
 import addButton from "../assets/plusIcon.png"
+import binIcon from "../assets/binIcon.png"
+import editIcon from "../assets/editIcon.png"
 
 export default function Home({
     userInfo,
@@ -42,8 +44,6 @@ export default function Home({
     }, [userInfo])
 
 
-    // const specificUserInfo = userInfo[0]? userInfo[0] : []
-
     return(
         <div>
             <Intro 
@@ -60,6 +60,8 @@ export default function Home({
                 setTechStack={setTechStack}
                 loggedUser={loggedUser}
                 addButton={addButton}
+                binIcon={binIcon}
+                editIcon={editIcon}
             />
 
             <Projects 

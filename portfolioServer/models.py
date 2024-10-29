@@ -102,6 +102,7 @@ class Projects(db.Model, SerializerMixin):
     #Add serialize rules
     serialize_rules = (
         "-institutes.projects",
+        "-points.projects",
     )
 
 class ProjectPoints(db.Model, SerializerMixin):

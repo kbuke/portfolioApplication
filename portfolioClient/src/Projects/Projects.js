@@ -25,6 +25,7 @@ export default function Projects({
     setProjectPoints
 }){
     console.log(projectStack)
+    console.log(projectPoints)
 
     const [sortProjects, setSortProjects] = useState([])
     const [newProject, setNewProject] = useState(false)
@@ -51,6 +52,8 @@ export default function Projects({
     useEffect(() => {
         setSortProjects(projects.sort((a, b) => new Date(b.start_date) - new Date(a.start_date)))
     }, [projects, projectStack, projectPoints])
+
+    console.log(sortProjects)
 
     const renderProjects = sortProjects.map((project, index) => {
         const projectName = project.name;

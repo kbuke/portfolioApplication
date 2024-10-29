@@ -73,6 +73,25 @@ class Technologies(Resource):
                 "error": [str(e)]
             }, 400
 
+class TechnologiesId(Resource):
+    def get(self, id):
+        stack_info = Languages.query.filter(Languages.id==id).first()
+        if stack_info:
+            return make_response(stack_info.to_dict(), 201)
+        return {'error': "Stack not found"}
+    
+    def delete(self, id):
+        stack_info = Languages.query.filter(Languages.id==id).first()
+        if stack_info:
+            db.session.delete(stack_info)
+            db.session.commit()
+            return{
+                "message": "Stack deleted"
+            }, 200 
+        return{
+            "error": "Stack not found"
+        }, 404
+
 class Institutes(Resource):
     def get(self):
         institutes = [institute.to_dict() for institute in Institute.query.all()]
@@ -260,6 +279,8 @@ api.add_resource(Profiles, '/profile')
 api.add_resource(ProfilesId, '/profiles/<int:id>')
 
 api.add_resource(Technologies, '/technologies')
+api.add_resource(TechnologiesId, '/technologies/<int:id>')
+
 api.add_resource(Institutes, '/institutes')
 api.add_resource(Project, '/projects')
 api.add_resource(Points, '/points')

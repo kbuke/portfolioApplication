@@ -1,16 +1,30 @@
 import { useEffect, useState } from "react"
 
 import "./TechStack.css"
+
 import NewStack from "./Components/NewStack"
+import DeleteStack from "./Components/DeleteStack"
 
 export default function TechStack({
     techStack,
     setTechStack,
     loggedUser,
-    addButton
+    addButton,
+    binIcon,
+    editIcon
 }){
     const [specificTechStack, setSpecificTechStack] = useState([])
     const [addStack, setAddStack] = useState(false)
+
+    const [deleteStack, setDeleteStack] = useState(false)
+    const [selectStackName, setSelectStackName] = useState("")
+    const [selectedStackId, setSelectedStackId] = useState()
+
+    const handleDelete = (stackName, stackId) => {
+        setDeleteStack(true)
+        setSelectStackName(stackName)
+        setSelectedStackId(stackId)
+    }
 
     useEffect(() => (
         setSpecificTechStack(techStack)
@@ -51,12 +65,37 @@ export default function TechStack({
                     >
                         {tech.experience}
                     </h3>
+
+                    {loggedUser ?
+                        <div>
+                            <img 
+                                src={binIcon}
+                                alt="deleteStack"
+                                style={{height: "40px", width: "40px", borderRadius: "50%", backgroundColor: "white", cursor: "pointer"}}
+                                onClick={() => handleDelete(tech.name, tech.id)}
+                            />
+                        </div>
+                        :
+                        null
+                    }
                 </div>
             </div>
         </div>
     ))
     return(
         <>
+            {deleteStack ?
+                <DeleteStack 
+                    setDeleteStack={setDeleteStack}
+                    selectStackName={selectStackName}
+                    selectedStackId={selectedStackId}
+                    setSelectedStackId={setSelectedStackId}
+                    techStack={techStack}
+                    setTechStack={setTechStack}
+                />
+                :
+                null
+            }
             <h1
                 id="subHeadings"
             >

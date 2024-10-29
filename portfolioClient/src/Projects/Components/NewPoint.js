@@ -25,8 +25,8 @@ export default function NewPoint({
         .then(r => r.json())
         .then(newPoint => {
             setProjectPoints([...projectPoints, newPoint])
+            setNewPoint(false)
         })
-        .then(setNewPoint(false))
     }
 
     return(
