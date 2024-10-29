@@ -4,6 +4,7 @@ import "./TechStack.css"
 
 import NewStack from "./Components/NewStack"
 import DeleteStack from "./Components/DeleteStack"
+import EditStack from "./Components/EditStack"
 
 export default function TechStack({
     techStack,
@@ -20,10 +21,22 @@ export default function TechStack({
     const [selectStackName, setSelectStackName] = useState("")
     const [selectedStackId, setSelectedStackId] = useState()
 
+    const [editStack, setEditStack] = useState(false)
+    const [editStackImg, setEditStackImg] = useState("")
+    const [editStackExperience, setEditStackExperience] = useState("")
+
     const handleDelete = (stackName, stackId) => {
         setDeleteStack(true)
         setSelectStackName(stackName)
         setSelectedStackId(stackId)
+    }
+
+    const handleEdit = (stackId, stackName, stackImg, stackExp) => {
+        setSelectedStackId(stackId)
+        setEditStack(true)
+        setSelectStackName(stackName)
+        setEditStackImg(stackImg)
+        setEditStackExperience(stackExp)
     }
 
     useEffect(() => (
@@ -67,12 +80,21 @@ export default function TechStack({
                     </h3>
 
                     {loggedUser ?
-                        <div>
+                        <div
+                            style={{display: "grid", gridTemplateColumns: "repeat(10% 10%)", marginBottom: "5px"}}
+                        >
                             <img 
                                 src={binIcon}
                                 alt="deleteStack"
-                                style={{height: "40px", width: "40px", borderRadius: "50%", backgroundColor: "white", cursor: "pointer"}}
                                 onClick={() => handleDelete(tech.name, tech.id)}
+                                className="editDeleteStack"
+                            />
+
+                            <img 
+                                src={editIcon}
+                                alt="editStack"
+                                className="editDeleteStack"
+                                onClick={() => handleEdit(tech.id, tech.name, tech.logo, tech.experience)}
                             />
                         </div>
                         :
@@ -96,6 +118,24 @@ export default function TechStack({
                 :
                 null
             }
+
+            {editStack? 
+                <EditStack 
+                    selectedStackId={selectedStackId}
+                    selectStackName={selectStackName}
+                    setSelectStackName={setSelectStackName}
+                    setEditStack={setEditStack}
+                    editStackImg={editStackImg}
+                    setEditStackImg={setEditStackImg}
+                    editStackExperience={editStackExperience}
+                    setEditStackExperience={setEditStackExperience}
+                    techStack={techStack}
+                    setTechStack={setTechStack}
+                />
+                :
+                null
+            }
+
             <h1
                 id="subHeadings"
             >

@@ -60,3 +60,11 @@
     margin-left: 20px;
     font-size: 350%;
 }
+
+.editDeleteStack{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%; 
+    background-color: white; 
+    cursor: pointer;
+}

@@ -80,6 +80,26 @@ class TechnologiesId(Resource):
             return make_response(stack_info.to_dict(), 201)
         return {'error': "Stack not found"}
     
+    def patch(self, id):
+        data = request.get_json()
+        stack_info = Languages.query.filter(Languages.id==id).first()
+
+        if stack_info:
+            try:
+                for attr, value in data.items():
+                    setattr(stack_info, attr, value)
+                db.session.commit()
+
+                return make_response(stack_info.to_dict(), 202)
+            except ValueError:
+                return{
+                    "error": ["Validation Error"]
+                }, 404 
+        return {
+            "error": "Stack not found"
+        }, 404
+
+    
     def delete(self, id):
         stack_info = Languages.query.filter(Languages.id==id).first()
         if stack_info:
