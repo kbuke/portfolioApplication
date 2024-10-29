@@ -13,6 +13,10 @@ import DeleteProject from "./Components/DeleteProject"
 
 import NewPoint from "./Components/NewPoint"
 
+import EditProject from "./Components/EditProject"
+
+import DeletePoint from "./Components/DeletePoint"
+
 export default function Projects({
     projects,
     setProjects,
@@ -28,8 +32,7 @@ export default function Projects({
     editIcon,
     binIcon
 }){
-    console.log(projectStack)
-    console.log(projectPoints)
+
 
     const [sortProjects, setSortProjects] = useState([])
     const [newProject, setNewProject] = useState(false)
@@ -42,7 +45,20 @@ export default function Projects({
 
     const [deleteProject, setDeleteProject] = useState(false)
 
+    const [editProject, setEditProject] = useState(false)
+
+    const [projectImg, setProjectImg] = useState("")
     const [projectName, setProjectName] = useState("")
+    const [projectGit, setProjectGit] = useState("")
+    const [projectBlog, setProjectBlog] = useState("")
+    const [projectStart, setProjectStart] = useState("")
+    const [projectEnd, setProjectEnd] = useState("")
+
+    const [deletePoint, setDeletePoint] = useState(false)
+
+    const [pointId, setPointId] = useState()
+
+    console.log(`I am trying to delete a point ${pointId}: ${deletePoint}`)
 
     const handleProjectStack = (identity) => {
         setProjectId(identity)
@@ -54,6 +70,18 @@ export default function Projects({
         setProjectId(identity)
     }
 
+    //Handle edit request
+    const handleEditProject = (projectId, projectImg, projectName, projectGit, projectBlog, projectStart, projectEnd) => {
+        setProjectId(projectId)
+        setProjectImg(projectImg)
+        setProjectName(projectName)
+        setProjectGit(projectGit? projectGit : "")
+        setProjectBlog(projectBlog? projectBlog : "")
+        setProjectStart(projectStart)
+        setProjectEnd(projectEnd)
+        setEditProject(true)
+    }
+
     //Handle delete request
     const handleDeleteProject = (projectId, projectName) => {
         setProjectId(projectId)
@@ -61,20 +89,21 @@ export default function Projects({
         setProjectName(projectName)
     }
 
-    console.log(`I have selected project ${projectId}`)
+    const handleDeletePoint = (pointId) => {
+        setPointId(pointId)
+        setDeletePoint(true)
+    }
 
     //Use dependancy array to alter projects when changes made
     useEffect(() => {
         setSortProjects(projects.sort((a, b) => new Date(b.start_date) - new Date(a.start_date)))
     }, [projects, projectStack, projectPoints])
 
-    console.log(sortProjects)
 
     const renderProjects = sortProjects.map((project, index) => {
         const projectName = project.name;
         const projectImg = project.image;
 
-        console.log(project)
     
         const projectInstitution = project.institutes;
         const instituteLogo = projectInstitution.logo;
@@ -89,13 +118,36 @@ export default function Projects({
     
         const projectPoints = project.points;
         const renderPoints = projectPoints.map((points, index) => (
-            <li
-                key={index}
-                className="pointsList"
-                style={{ marginBottom: "20px" }}
-            >
-                {points.point}
-            </li>
+            <>
+                <li
+                    key={index}
+                    className="pointsList"
+                    style={{ marginBottom: "20px" }}
+                >
+                    {points.point}
+                </li>
+
+                {loggedUser?
+                    <div
+                        style={{display: "grid", gridTemplateColumns: "20% 5%", gap: "20px", marginBottom: "10px"}}
+                    >
+                        <button
+                            className="pointOptionButton"
+                        >
+                            Edit Point
+                        </button>
+
+                        <button
+                            className="pointOptionButton"
+                            onClick={() => handleDeletePoint(points.id)}
+                        >
+                            Delete Point
+                        </button>
+                    </div>
+                    :
+                    null
+                }
+            </>
         ));
     
         return (
@@ -131,6 +183,15 @@ export default function Projects({
 
                                 <div
                                     className="editProjectButtonContainer"
+                                    onClick={() => handleEditProject(
+                                        project.id, 
+                                        project.image, 
+                                        project.name, 
+                                        project.git_hub_link, 
+                                        project.blog_link,
+                                        project.start_date,
+                                        project.end_date
+                                    )}
                                 >
                                     <img 
                                         className="editProjectButton"
@@ -268,6 +329,41 @@ export default function Projects({
                         projects={projects}
                         setProjects={setProjects}
                         setDeleteProject={setDeleteProject}
+                    />
+                    :
+                    null
+                }
+
+                {editProject ?
+                    <EditProject 
+                        projectImg={projectImg}
+                        setProjectImg={setProjectImg}
+                        projectName={projectName}
+                        setProjectName={setProjectName}
+                        projectGit={projectGit}
+                        setProjectGit={setProjectGit}
+                        projectBlog={projectBlog}
+                        setProjectBlog={setProjectBlog}
+                        projectStart={projectStart}
+                        setProjectStart={setProjectStart}
+                        projectEnd={projectEnd}
+                        setProjectEnd={setProjectEnd}
+                        setEditProject={setEditProject}
+                        projectId={projectId}
+                        projects={projects}
+                        setProjects={setProjects}
+                    />
+                    :
+                    null
+                }
+
+                {deletePoint ?
+                    <DeletePoint 
+                        pointId={pointId}
+                        setPointId={setPointId}
+                        setDeletePoint={setDeletePoint}
+                        projectPoints={projectPoints}
+                        setProjectPoints={setProjectPoints}
                     />
                     :
                     null

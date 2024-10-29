@@ -172,6 +172,37 @@ class ProjectId(Resource):
             return make_response(project_info.to_dict(), 201)
         return {"error": "Project not found"}
     
+    def patch(self, id):
+        data = request.get_json()
+        project_info = Projects.query.filter(Projects.id==id).first()
+
+        if project_info:
+            try:
+                if "start_date" in data:
+                    try:
+                        data["start_date"] = datetime.strptime(data["start_date"], "%Y-%m-%d").date()
+                    except ValueError:
+                        return {"error": "Invalid start_date format"}, 400
+                
+                if "end_date" in data:
+                    try:
+                        data["end_date"] = datetime.strptime(data["end_date"], "%Y-%m-%d").date()
+                    except ValueError:
+                        return{"error": "Invalid end_date format"}, 400
+
+                for attr, value in data.items():
+                    setattr(project_info, attr, value)
+                db.session.commit()
+
+                return make_response(project_info.to_dict(), 202)
+            except ValueError:
+                return {
+                    "error": ["Validation Error"]
+                }, 404 
+        return {
+            "error": "Project not found"
+        }, 404
+    
     def delete(self, id):
         project_info = Projects.query.filter(Projects.id==id).first()
         if project_info:
@@ -203,6 +234,44 @@ class Points(Resource):
             return{
                 "error": [str(e)]
             }, 400
+
+class PointsId(Resource):
+    def get(self, id):
+        points_info = ProjectPoints.query.filter(ProjectPoints.id==id).first()
+        if points_info:
+            return make_response(points_info.to_dict(), 201)
+        return {"error": "Point not found"}
+    
+    def patch(self, id):
+        data = request.get_json()
+        points_info = ProjectPoints.query.filter(ProjectPoints.id==id).first()
+
+        if points_info:
+            try:
+                for attr, value, in data.items():
+                    setattr(points_info, attr, value)
+                db.session.commit()
+
+                return make_response(points_info.to_dict(), 202)
+            except ValueError:
+                return {
+                    "error": ["Validation Error"]
+                }, 404 
+        return{
+            "error": "Point not found"
+        }, 404 
+    
+    def delete(self, id):
+        points_info = ProjectPoints.query.filter(ProjectPoints.id==id).first()
+        if points_info:
+            db.session.delete(points_info)
+            db.session.commit()
+            return{
+                "message": "Point deleted"
+            }, 200
+        return{
+            "error": "Point not found"
+        }, 404
 
 class ProjectLanguage(Resource):
     def get(self):
@@ -326,6 +395,8 @@ api.add_resource(Project, '/projects')
 api.add_resource(ProjectId, '/projects/<int:id>')
 
 api.add_resource(Points, '/points')
+api.add_resource(PointsId, '/points/<int:id>')
+
 api.add_resource(Email, '/emails')
 api.add_resource(ProjectLanguage, '/projecttech')
 api.add_resource(Login, '/login')

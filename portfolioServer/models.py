@@ -73,7 +73,7 @@ class Languages(db.Model, SerializerMixin):
 
     #Add relations 
     project_id = db.Column(db.Integer, db.ForeignKey("projects.id"))
-    project_language = db.relationship("ProjectLanguages", backref="languages")
+    project_language = db.relationship("ProjectLanguages", backref="languages", cascade="all, delete-orphan")
 
     #Add serialize rules
     serialize_rules = (

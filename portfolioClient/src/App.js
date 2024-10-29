@@ -130,8 +130,6 @@ function App() {
     .then(tech => setProjectStack(tech))
   }, [])
 
-  console.log(projectStack)
-
   return(
     <div
       style={{
