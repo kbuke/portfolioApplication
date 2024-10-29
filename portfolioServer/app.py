@@ -165,6 +165,25 @@ class Project(Resource):
                 "error": [str(e)]
             }, 400
 
+class ProjectId(Resource):
+    def get(self, id):
+        project_info = Projects.query.filter(Projects.id==id).first()
+        if project_info:
+            return make_response(project_info.to_dict(), 201)
+        return {"error": "Project not found"}
+    
+    def delete(self, id):
+        project_info = Projects.query.filter(Projects.id==id).first()
+        if project_info:
+            db.session.delete(project_info)
+            db.session.commit()
+            return{
+                "message": "Project deleted"
+            }, 200
+        return{
+            "error": "Project not found"
+        }, 404
+
 class Points(Resource):
     def get(self):
         points = [point.to_dict() for point in ProjectPoints.query.all()]
@@ -302,7 +321,10 @@ api.add_resource(Technologies, '/technologies')
 api.add_resource(TechnologiesId, '/technologies/<int:id>')
 
 api.add_resource(Institutes, '/institutes')
+
 api.add_resource(Project, '/projects')
+api.add_resource(ProjectId, '/projects/<int:id>')
+
 api.add_resource(Points, '/points')
 api.add_resource(Email, '/emails')
 api.add_resource(ProjectLanguage, '/projecttech')

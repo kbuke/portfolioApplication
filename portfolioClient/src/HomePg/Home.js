@@ -76,6 +76,8 @@ export default function Home({
                 setProjectStack={setProjectStack}
                 projectPoints={projectPoints}
                 setProjectPoints={setProjectPoints}
+                editIcon={editIcon}
+                binIcon={binIcon}
             />
 
             <Email 

@@ -9,6 +9,8 @@ import NewProject from "./Components/NewProject"
 
 import NewProjectStack from "./Components/NewProjectStack"
 
+import DeleteProject from "./Components/DeleteProject"
+
 import NewPoint from "./Components/NewPoint"
 
 export default function Projects({
@@ -22,7 +24,9 @@ export default function Projects({
     projectStack,
     setProjectStack,
     projectPoints,
-    setProjectPoints
+    setProjectPoints,
+    editIcon,
+    binIcon
 }){
     console.log(projectStack)
     console.log(projectPoints)
@@ -36,6 +40,10 @@ export default function Projects({
 
     const [newPoint, setNewPoint] = useState(false)
 
+    const [deleteProject, setDeleteProject] = useState(false)
+
+    const [projectName, setProjectName] = useState("")
+
     const handleProjectStack = (identity) => {
         setProjectId(identity)
         setNewStack(true)
@@ -44,6 +52,13 @@ export default function Projects({
     const handleProjectPoint = (identity) => {
         setNewPoint(true)
         setProjectId(identity)
+    }
+
+    //Handle delete request
+    const handleDeleteProject = (projectId, projectName) => {
+        setProjectId(projectId)
+        setDeleteProject(true)
+        setProjectName(projectName)
     }
 
     console.log(`I have selected project ${projectId}`)
@@ -102,13 +117,38 @@ export default function Projects({
 
                         {loggedUser ?
                             <div
-                                className="newPointContainer"
+                                style={{display: "grid", gridTemplateColumns: "repeat(3, auto)", gap: "20px", marginBottom: "30px"}}
                             >
-                                <img 
-                                    src={addButton}
-                                    className="addButton"
-                                    onClick={() => handleProjectPoint(project.id)}
-                                />
+                                <div
+                                    className="newPointContainer"
+                                >
+                                    <img 
+                                        src={addButton}
+                                        className="addButton"
+                                        onClick={() => handleProjectPoint(project.id)}
+                                    />
+                                </div>
+
+                                <div
+                                    className="editProjectButtonContainer"
+                                >
+                                    <img 
+                                        className="editProjectButton"
+                                        src={editIcon}
+                                        alt="editProject"
+                                    />
+                                </div>
+
+                                <div
+                                    className="deleteProjectButtonContainer"
+                                >
+                                    <img 
+                                        className="deleteProjectButton"
+                                        src={binIcon}
+                                        alt="deleteProject"
+                                        onClick={() => handleDeleteProject(project.id, project.name)}
+                                    />
+                                </div>
                             </div>
                             :
                             null
@@ -154,6 +194,7 @@ export default function Projects({
                         {specificProjectStack.join(" | ")}
                     </h3>
                 </div>
+
 
                 {loggedUser ?
                     <div
@@ -214,6 +255,19 @@ export default function Projects({
                         projectPoints={projectPoints}
                         setProjectPoints={setProjectPoints}
                         setNewPoint={setNewPoint}
+                    />
+                    :
+                    null
+                }
+
+                {deleteProject ?
+                    <DeleteProject 
+                        projectId={projectId}
+                        setProjectId={setProjectId}
+                        projectName={projectName}
+                        projects={projects}
+                        setProjects={setProjects}
+                        setDeleteProject={setDeleteProject}
                     />
                     :
                     null

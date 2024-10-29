@@ -86,11 +86,22 @@
     overflow: hidden;
 }
 
-.newPointContainer{
+.newPointContainer,
+.editProjectButtonContainer,
+.deleteProjectButtonContainer{
     height: 60px;
     width: 60px;
     border-radius: 50%;
     overflow: hidden;
     justify-self: center;
     align-self: center;
+}
+
+
+.editProjectButton,
+.deleteProjectButton{
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    cursor: pointer;
 }

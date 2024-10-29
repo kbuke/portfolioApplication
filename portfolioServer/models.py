@@ -94,16 +94,17 @@ class Projects(db.Model, SerializerMixin):
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
 
-    #Set up relations
+    # Set up relations with cascade delete
     institute_id = db.Column(db.Integer, db.ForeignKey("institutes.id"))
-    points = db.relationship("ProjectPoints", backref="projects")
-    project_language = db.relationship("ProjectLanguages", backref="projects")
+    points = db.relationship("ProjectPoints", backref="projects", cascade="all, delete-orphan")
+    project_language = db.relationship("ProjectLanguages", backref="projects", cascade="all, delete-orphan")
 
-    #Add serialize rules
+    # Add serialize rules
     serialize_rules = (
         "-institutes.projects",
         "-points.projects",
     )
+
 
 class ProjectPoints(db.Model, SerializerMixin):
     __tablename__ = "projectPoints"
