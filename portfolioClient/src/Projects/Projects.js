@@ -17,6 +17,8 @@ import EditProject from "./Components/EditProject"
 
 import DeletePoint from "./Components/DeletePoint"
 
+import EditPoints from "../TechStack/Components/EditPoints"
+
 export default function Projects({
     projects,
     setProjects,
@@ -56,7 +58,10 @@ export default function Projects({
 
     const [deletePoint, setDeletePoint] = useState(false)
 
+    const [editPoint, setEditPoint] = useState(false)
+
     const [pointId, setPointId] = useState()
+    const [point, setPoint] = useState("")
 
     console.log(`I am trying to delete a point ${pointId}: ${deletePoint}`)
 
@@ -92,6 +97,12 @@ export default function Projects({
     const handleDeletePoint = (pointId) => {
         setPointId(pointId)
         setDeletePoint(true)
+    }
+
+    const handLEditPoint = (pointId, point) => {
+        setPointId(pointId)
+        setPoint(point)
+        setEditPoint(true)
     }
 
     //Use dependancy array to alter projects when changes made
@@ -133,6 +144,7 @@ export default function Projects({
                     >
                         <button
                             className="pointOptionButton"
+                            onClick={() => handLEditPoint(points.id, points.point)}
                         >
                             Edit Point
                         </button>
@@ -362,6 +374,20 @@ export default function Projects({
                         pointId={pointId}
                         setPointId={setPointId}
                         setDeletePoint={setDeletePoint}
+                        projectPoints={projectPoints}
+                        setProjectPoints={setProjectPoints}
+                    />
+                    :
+                    null
+                }
+
+                {editPoint ?
+                    <EditPoints 
+                        pointId={pointId}
+                        setPointId={setPointId}
+                        point={point}
+                        setPoint={setPoint}
+                        setEditPoint={setEditPoint}
                         projectPoints={projectPoints}
                         setProjectPoints={setProjectPoints}
                     />
