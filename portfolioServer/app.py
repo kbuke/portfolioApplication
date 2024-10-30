@@ -1,4 +1,4 @@
-from flask import request, make_response, session
+from flask import request, make_response, session, render_template
 
 from config import app, db, api, os
 
@@ -11,6 +11,12 @@ import smtplib
 from email.mime.text import MIMEText
 
 from datetime import datetime
+
+
+@app.route('/')
+@app.route('/<int:id>')
+def index(id=0):
+    return render_template("index.html")
 
 class Profiles(Resource):
     def get(self):

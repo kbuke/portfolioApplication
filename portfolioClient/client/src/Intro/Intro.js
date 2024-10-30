@@ -73,15 +73,27 @@ export default function Intro({
             <div style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
                 <div id="socialsGrid">
                     <Link className="linkednLink" to={`${specificUserInfo.linkdn_link}`}>
-                        <img src={linkednLogo} className="socialLogo" />
+                        <img 
+                            src={linkednLogo} 
+                            className="socialLogo" 
+                            alt="linkednImg"
+                        />
                     </Link>
 
                     <Link className="gitHubLink" to={`${specificUserInfo.git_hub_link}`}>
-                        <img src={gitHubLogo} className="socialLogo" />
+                        <img 
+                            src={gitHubLogo} 
+                            className="socialLogo" 
+                            alt="gitLogo"
+                        />
                     </Link>
 
                     <Link className="instaLink" to={`${specificUserInfo.insta_link}`}>
-                        <img className="socialLogo" src={instaLogo} />
+                        <img 
+                            className="socialLogo" 
+                            src={instaLogo} 
+                            alt="instaLogo"
+                        />
                     </Link>
                 </div>
             </div>

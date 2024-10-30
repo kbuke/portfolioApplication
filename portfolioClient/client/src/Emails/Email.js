@@ -1,7 +1,6 @@
 import "./Email.css"
 
 import NewEmail from "../Projects/Components/NewEmail"
-import { useState } from "react"
 
 export default function Email({
     allEmails,

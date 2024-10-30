@@ -19,7 +19,7 @@ export default function Picture({
         <div>
             <img 
                 src={profilePic}
-                alt="Kaan Buke image"
+                alt="profileImg"
                 style={{
                     maxWidth: "100%",
                     zIndex: "-0.5",

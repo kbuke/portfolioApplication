@@ -11,10 +11,10 @@ gunicorn = "*"
 flask_sqlalchemy = "*"
 flask_restful = "*"
 flask_bcrypt = "*"
-python_dotenv = "*"
 psycopg2_binary = "*"
 sqlalchemy_serializer = "*"
 datetime = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

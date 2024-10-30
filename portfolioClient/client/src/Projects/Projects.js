@@ -166,7 +166,7 @@ export default function Projects({
             <div style={{ display: "flex", flexDirection: "column" }} key={index}>
                 <div className="projectContainer">
                     <img 
-                        alt={`${projectName} Image`}
+                        alt={`${projectName}Image`}
                         src={projectImg}
                         className="projectImg"
                     />
@@ -190,6 +190,7 @@ export default function Projects({
                                         src={addButton}
                                         className="addButton"
                                         onClick={() => handleProjectPoint(project.id)}
+                                        alt="addPoint"
                                     />
                                 </div>
 
@@ -405,6 +406,7 @@ export default function Projects({
                             src={addButton}
                             className="addButton"
                             onClick={() => setNewProject(true)}
+                            alt="addProject"
                         />
                     </div>
                     :
