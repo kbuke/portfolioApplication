@@ -410,7 +410,6 @@ api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(CheckSession, '/check_session')
 
-api.add_resource(index, "/")
 
 
 if __name__ == "__main__":
