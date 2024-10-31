@@ -1,4 +1,4 @@
-from flask import request, make_response, session, render_template
+from flask import request, make_response, session, render_template, send_from_directory
 
 from config import app, db, api, os
 
@@ -13,11 +13,14 @@ from email.mime.text import MIMEText
 from datetime import datetime
 
 
-@app.route('/')
-@app.route('/<int:id>')
-def index(id=0):
-    print("Looking for index.html in:", os.path.join(app.template_folder, "index.html"))
-    return render_template("index.html")
+# @app.route('/')
+# @app.route('/<int:id>')
+class Index(Resource):
+    def get(self):
+        return send_from_directory("../portfolioClient/client/build", "index.html")
+# def index(id=0):
+#     print("Looking for index.html in:", os.path.join(app.template_folder, "index.html"))
+#     return render_template("index.html")
 
 class Profiles(Resource):
     def get(self):
@@ -409,6 +412,8 @@ api.add_resource(ProjectLanguage, '/projecttech')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(CheckSession, '/check_session')
+
+api.add_resource(Index, "/")
 
 
 
