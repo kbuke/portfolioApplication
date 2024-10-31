@@ -17,7 +17,7 @@ from datetime import datetime
 @app.route('/<int:id>')
 def index(id=0):
     print("Looking for index.html in:", os.path.join(app.template_folder, "index.html"))
-    return render_template("index.html")
+    return render_template("../portfolioClient/client/build/index.html")
 
 class Profiles(Resource):
     def get(self):
@@ -409,6 +409,8 @@ api.add_resource(ProjectLanguage, '/projecttech')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')
 api.add_resource(CheckSession, '/check_session')
+
+api.add_resource(index, "/")
 
 
 if __name__ == "__main__":

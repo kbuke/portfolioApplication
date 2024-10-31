@@ -13,8 +13,8 @@ load_dotenv()
 app = Flask(
     __name__,
     static_url_path="",
-    static_folder="./portfolioClient/client/build",
-    template_folder="./portfolioClient/client/build"
+    static_folder="../portfolioClient/client/build",
+    template_folder="../portfolioClient/client/build"
 )
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URI")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False 
