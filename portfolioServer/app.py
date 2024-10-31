@@ -12,15 +12,13 @@ from email.mime.text import MIMEText
 
 from datetime import datetime
 
+import os
 
-# @app.route('/')
-# @app.route('/<int:id>')
+
 class Index(Resource):
     def get(self):
         return send_from_directory("../portfolioClient/client/build", "index.html")
-# def index(id=0):
-#     print("Looking for index.html in:", os.path.join(app.template_folder, "index.html"))
-#     return render_template("index.html")
+
 
 class Profiles(Resource):
     def get(self):
@@ -374,7 +372,7 @@ class Email(Resource):
             smtp_server = "smtp.gmail.com"
             smtp_port = 587
             sender_email = "kabuke13@gmail.com"  
-            sender_password = "qnwx hges envp ivzq"  # Ensure this is securely stored in an environment variable
+            sender_password = os.environ.get("gmail_password")  # Ensure this is securely stored in an environment variable
 
             # Construct the email message
             msg = MIMEText(f"From: {sender_name}\nCompany: {sender_company}\n\nMessage:\n{message}")
