@@ -17,7 +17,7 @@ from datetime import datetime
 @app.route('/<int:id>')
 def index(id=0):
     print("Looking for index.html in:", os.path.join(app.template_folder, "index.html"))
-    return render_template("../portfolioClient/client/build/index.html")
+    return render_template("index.html")
 
 class Profiles(Resource):
     def get(self):
